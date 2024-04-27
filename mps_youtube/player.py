@@ -138,6 +138,11 @@ class BasePlayer:
 
         print('---', self.stream['url'])
 
+        with open('clipboard', 'w') as file:
+            file.write(self.stream['url'])
+
+        os.environ['CLIPBOARD'] = self.stream['url']
+
         size = streams.get_size(self.song.ytid, self.stream['url'])
         songdata = (self.song.ytid, '' if self.stream.get('ext') is None else self.stream.get('ext') + " " + self.stream['quality'],
                     int(size / (1024 ** 2)))
