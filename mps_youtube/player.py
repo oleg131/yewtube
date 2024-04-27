@@ -37,6 +37,8 @@ class BasePlayer:
     def play(self, songlist, shuffle=False, repeat=False, override=False):
         """ Play a range of songs, exit cleanly on keyboard interrupt. """
 
+        print('- play')
+
         if config.ALWAYS_REPEAT.get:
             repeat = True
 
@@ -49,6 +51,7 @@ class BasePlayer:
 
         self.song_no = 0
         while 0 <= self.song_no <= len(self.songlist)-1:
+            print('- song number', self.song_no)
             self.song = self.songlist[self.song_no]
             g.content = self._playback_progress(self.song_no, self.songlist,
                                                 repeat=repeat)
@@ -77,6 +80,7 @@ class BasePlayer:
                                                             self.song,
                                                             override=self.override,
                                                             softrepeat=self.softrepeat)
+                print('- playsong')
                 self._playsong()
 
             except KeyboardInterrupt:
@@ -131,6 +135,8 @@ class BasePlayer:
 
         if config.NOTIFIER.get:
             subprocess.Popen(shlex.split(config.NOTIFIER.get) + [self.song.title])
+
+        print('---', self.stream['url'])
 
         size = streams.get_size(self.song.ytid, self.stream['url'])
         songdata = (self.song.ytid, '' if self.stream.get('ext') is None else self.stream.get('ext') + " " + self.stream['quality'],

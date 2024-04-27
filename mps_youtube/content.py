@@ -83,7 +83,7 @@ def generate_songlist_display(song=False, zeromsg=None):
     max_results = getxy().max_results
 
     if not g.model:
-        g.message = zeromsg or "Enter /search-term to search or [h]elp"
+        g.message = zeromsg or "Enter /search-term ... to search or [h]elp"
         return logo(c.g) + "\n\n"
     g.rprompt = page_msg(g.current_page)
 
@@ -205,14 +205,14 @@ def _get_user_columns():
 def logo(col=None, version=""):
     """ Return text logo. """
     col = col if col else random.choice((c.g, c.r, c.y, c.b, c.p, c.w))
-    logo_txt = r"""                      _         _          
-                     | |       | |         
-  _   _  _____      _| |_ _   _| |__   ___ 
+    logo_txt = r"""                      _         _
+                     | |       | |
+  _   _  _____      _| |_ _   _| |__   ___
  | | | |/ _ \ \ /\ / / __| | | | '_ \ / _ \
  | |_| |  __/\ V  V /| |_| |_| | |_) |  __/
   \__, |\___| \_/\_/  \__|\__,_|_.__/ \___|
-   __/ |                                   
-  |___/                                    
+   __/ |
+  |___/
     """
 
     version = " v" + version if version else ""
