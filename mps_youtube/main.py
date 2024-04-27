@@ -115,11 +115,14 @@ def prompt_for_exit():
 
 
 def main():
+    print('main')
     init.init()
     """ Main control loop. """
+    print('set title')
     if config.SET_TITLE.get:
         util.set_window_title("yewtube")
 
+    print("content logo")
     if not g.command_line:
         g.content = content.logo(col=c.g, version=__version__) + "\n\n"
         g.message = "main Enter /search-term to search ... or [h]elp"

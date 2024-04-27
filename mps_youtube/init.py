@@ -33,14 +33,22 @@ mswin = os.name == "nt"
 def init():
     """ Initial setup. """
 
+    print('init')
+
+    print('process cl args')
+
     _process_cl_args()
 
     # set player to mpv or mplayer if found, otherwise unset
+    print('set player to mpv or mplayer if found, otherwise unset')
     suffix = ".exe" if mswin else ""
     vlc, mplayer, mpv = "vlc" + suffix, "mplayer" + suffix, "mpv" + suffix
 
     # check for old pickled binary config and convert to json if so
+    print('check for old pickled binary config and convert to json if so')
     config.convert_old_cf_to_json()
+
+    print('config load')
 
     if not os.path.exists(g.CFFILE):
 
@@ -67,24 +75,30 @@ def init():
     # Make pafy use the same api key
     # pafy.set_api_key(config.API_KEY.get)
 
+    print('cache load')
+
     _init_readline()
     cache.load()
     _init_transcode()
 
     # ensure encoder is not set beyond range of available presets
+    print('ensure encoder is not set beyond range of available presets')
     if config.ENCODER.get >= len(g.encoders):
         config.ENCODER.set("0")
 
     # check mpv/mplayer version
+    print('check mpv/mplayer version')
     if has_exefile(config.PLAYER.get):
         load_player_info(config.PLAYER.get)
 
     # setup colorama
+    print('setup colorama')
     if has_colorama and mswin:
         # Colorama converts ansi escape codes to Windows system calls
         colorama.init()
 
     # find muxer app
+    print('find muxer app')
     if mswin:
         g.muxapp = has_exefile("ffmpeg.exe") or has_exefile("avconv.exe")
 
@@ -92,6 +106,7 @@ def init():
         g.muxapp = has_exefile("ffmpeg") or has_exefile("avconv")
 
     # initialize MPRIS2 interface
+    print('initialize MPRIS2 interface')
     if config.MPRIS.get:
         try:
             from . import mpris
